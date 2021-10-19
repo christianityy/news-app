@@ -13,12 +13,11 @@ const NewsList = (props) => {
   }
 
   useEffect(async () => {
-    if (+filter === 1) {
+    if (+filter === +'1') {
       const results = await getLatestNews()
       setNews(results.data)
-    } else if (+filter === 2) {
-      const results = await getNews()
-      setNews(results.data)
+    } else if (+filter === +'2') {
+      setNews(news)
     } else {
       return
     }
