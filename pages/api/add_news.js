@@ -4,9 +4,18 @@ const Handler = async (req, res) => {
   if (req.method === 'POST') {
     try {
       const data = req.body
+      console.log(data.content)
+      const formData = {
+        datePosted: data.datePosted,
+        image: data.image,
+        startDate: new Date(data.startDate).toDateString(),
+        heading: data.heading,
+        postedBy: data.postedBy,
+        content: data.content,
+      }
       const client = await connectToDatabase()
       const newsCollection = await getCollection(client, 'news')
-      const result = await newsCollection.insertOne(data)
+      const result = await newsCollection.insertOne(formData)
       client.close()
       res.status(200).json({ data: result })
     } catch (error) {

@@ -6,7 +6,7 @@ const NewsForm = (props) => {
   const headingRef = useRef()
   const authorRef = useRef()
   const [imageFile, setImageFile] = useState()
-  const [richTextData, setRichTextData] = useState()
+  const [richTextData, setRichTextData] = useState('<em>Content here...</em>')
   const richTextHandler = (event, editor) => {
     setRichTextData(editor.getData())
   }

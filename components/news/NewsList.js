@@ -1,10 +1,37 @@
+import { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { getLatestNews, getNews } from '../../helpers/api-utils'
 import NewsItem from './NewsItem'
 
 const NewsList = (props) => {
+  const [filter, setFilter] = useState(1)
   const { news } = props
+  const [loadedNews, setNews] = useState(news)
+
+  const filterChangeHandler = (event) => {
+    setFilter(event.target.value)
+  }
+
+  useEffect(async () => {
+    if (+filter === 1) {
+      const results = await getLatestNews()
+      setNews(results.data)
+    } else if (+filter === 2) {
+      const results = await getNews()
+      setNews(results.data)
+    } else {
+      return
+    }
+  }, [filter])
   return (
     <div className="col-md-6 offset-md-3">
-      {news.map((newItem) => (
+      <div className="form-group">
+        <select className="form-control" onChange={filterChangeHandler}>
+          <option value="1">Today's News</option>
+          <option value="2">All News</option>
+        </select>
+      </div>
+      {loadedNews.map((newItem) => (
         <NewsItem
           key={newItem._id}
           image={newItem.image}

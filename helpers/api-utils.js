@@ -15,3 +15,9 @@ export const getNews = async () => {
   const result = await response.json()
   return result
 }
+
+export const getLatestNews = async () => {
+  const response = await fetch(`http://localhost:3000/api/get_latest_news`)
+  const result = await response.json()
+  return result
+}
