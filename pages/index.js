@@ -5,7 +5,6 @@ import { getNews } from '../helpers/api-utils'
 
 const HomePage = (props) => {
   const { news } = props
-  console.log(news)
   return (
     <Fragment>
       <div className="px-4 py-5 my-5 text-center">
