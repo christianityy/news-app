@@ -4,11 +4,7 @@ const Handler = async (req, res) => {
     const client = await connectToDatabase()
     const newsCollection = await getCollection(client, 'news')
     const results = await newsCollection
-      .find({
-        startDate: {
-          $gte: new Date().toDateString(),
-        },
-      })
+      .find({ startDate: { $lte: new Date() } })
       .toArray()
     client.close()
     res.status(200).json({ data: results })

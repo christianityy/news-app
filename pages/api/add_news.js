@@ -8,9 +8,9 @@ const Handler = async (req, res) => {
       const formData = {
         datePosted: data.datePosted,
         image: data.image,
-        startDate: new Date(data.startDate).toDateString(),
+        startDate: new Date(data.startDate),
         heading: data.heading,
-        postedBy: data.postedBy,
+        postedBy: new Date(data.postedBy).toDateString(),
         content: data.content,
       }
       const client = await connectToDatabase()
