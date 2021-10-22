@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import useSWR from 'swr'
 import { getLatestNews, getNews } from '../../helpers/api-utils'
 import NewsItem from './NewsItem'
@@ -14,14 +15,18 @@ const NewsList = (props) => {
 
   useEffect(async () => {
     if (+filter === +'1') {
-      const results = await getLatestNews()
-      setNews(results.data)
+      const { result, error } = await getLatestNews()
+      if (error) {
+        toast.error(error)
+      }
+      setNews(result.data)
     } else if (+filter === +'2') {
       setNews(news)
     } else {
       return
     }
   }, [filter])
+
   return (
     <div className="col-md-6 offset-md-3">
       <div className="form-group">

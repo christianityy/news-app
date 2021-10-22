@@ -1,10 +1,13 @@
 import { Fragment } from 'react'
+import { toast } from 'react-toastify'
 import NewsList from '../components/news/NewsList'
 import ImageApp from '../components/ui/ImageApp'
 import { getNews } from '../helpers/api-utils'
 
-const HomePage = (props) => {
-  const { news } = props
+const HomePage = ({ news, error }) => {
+  if (error) {
+    toast.error(error)
+  }
   return (
     <Fragment>
       <div className="px-4 py-5 my-5 text-center">
@@ -30,10 +33,11 @@ const HomePage = (props) => {
 }
 
 export async function getStaticProps() {
-  const results = await getNews()
+  const { result, error } = await getNews()
   return {
     props: {
-      news: results.data,
+      news: result.data,
+      error,
     },
   }
 }

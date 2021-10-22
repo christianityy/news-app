@@ -10,7 +10,7 @@ const Handler = async (req, res) => {
         image: data.image,
         startDate: new Date(data.startDate),
         heading: data.heading,
-        postedBy: new Date(data.postedBy).toDateString(),
+        postedBy: data.postedBy,
         content: data.content,
       }
       const client = await connectToDatabase()
@@ -21,6 +21,9 @@ const Handler = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message })
     }
+  } else {
+    res.setHeader('Allow', ['POST'])
+    res.status(405).json({ message: `Method ${req.method} is not allowed` })
   }
 }
 
